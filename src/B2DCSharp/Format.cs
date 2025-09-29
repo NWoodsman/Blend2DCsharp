@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BL
 {
-	public enum Format : int
+	public enum Format : UInt32
 	{
 		//! None or invalid pixel format.
 		BL_FORMAT_NONE = 0,
