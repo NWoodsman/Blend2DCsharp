@@ -63,7 +63,7 @@ public sealed class TestBLImage
 
 		Lib.bl_context_end(ref ctx_handle).Ok();
 
-		Lib.bl_image_write_to_file(ref img_handle, "testoutput.png", 0).Ok();
+		Lib.bl_image_write_to_file(ref img_handle, "lib_sample_2.png", 0).Ok();
 
 	}
 
@@ -93,7 +93,7 @@ public sealed class TestBLImage
 
 		ctx.End().Ok();
 
-		string path = @"testgradient2.png";
+		string path = @"api_sample_2.png";
 
 		img.WriteToFile(path).Ok();
 	}
