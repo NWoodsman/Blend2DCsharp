@@ -13,7 +13,10 @@ namespace BL.Gradient;
 /// <para>Typically the points are placed at the outside edge of geometry to be filled.</para>
 /// </summary>
 [StructLayout(LayoutKind.Sequential)]
-public ref struct LinearGradientValues
+public struct LinearGradientValues
 {
-	public double X0,Y0,X1,Y1;
+	public double X0;
+	public double Y0;
+	public double X1;
+	public double Y1;
 }

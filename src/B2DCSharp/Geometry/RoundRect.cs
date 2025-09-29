@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace BL.Geometry;
 
 [StructLayout(LayoutKind.Sequential)]
-public ref struct RoundRect
+public struct RoundRect
 {
 	public double X,Y,W,H;
 	public double Rx, Ry;
