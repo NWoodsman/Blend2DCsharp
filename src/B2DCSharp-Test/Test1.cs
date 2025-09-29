@@ -24,24 +24,31 @@ public sealed class TestBLImage
 	}
 
 	[TestMethod]
+	public void Test_API_ContextInitAs()
+	{
+		Image.InitAs(480, 480, BL.Format.BL_FORMAT_PRGB32, out Image? img).Ok();
+		img!.ContextOpen(out var ctx).Ok();
+	}
+
+	[TestMethod]
 	public void Test_lib_Sample2()
 	{
-		nint img_handle = default;
+		nint img_handle;
 		nint nullptr = 0;
-		nint ctx_handle = default;
+		nint ctx_handle;
 
 
-		Lib.bl_image_init_as(ref img_handle, 480, 480, Format.BL_FORMAT_PRGB32).Ok();
+		Lib.bl_image_init_as(out img_handle, 480, 480, Format.BL_FORMAT_PRGB32).Ok();
 
-		Lib.bl_context_init_as(ref ctx_handle, ref img_handle, 0).Ok();
+		Lib.bl_context_init_as(out ctx_handle, ref img_handle, 0).Ok();
 
 		Lib.bl_context_clear_all(ref ctx_handle).Ok();
 
 		LinearGradientValues vals = new LinearGradientValues() { X0 = 0, Y0 = 0, X1 = 0, Y1 = 480 };
 
-		nint gradient_handle = default;
+		nint gradient_handle;
 
-		Lib.bl_gradient_init_as(ref gradient_handle, GradientType.BL_GRADIENT_TYPE_LINEAR, vals, ExtendMode.BL_EXTEND_MODE_PAD,0,0,0).Ok();
+		Lib.bl_gradient_init_as(out gradient_handle, GradientType.BL_GRADIENT_TYPE_LINEAR, vals, ExtendMode.BL_EXTEND_MODE_PAD,0,0,0).Ok();
 
 		Lib.bl_gradient_add_stop_rgba32(ref gradient_handle, 0.0, 0xFFFFFFFF).Ok();
 		Lib.bl_gradient_add_stop_rgba32(ref gradient_handle, 0.5, 0xFF5FAFDF).Ok();
@@ -63,8 +70,6 @@ public sealed class TestBLImage
 	[TestMethod]
 	public void Test_API_Sample2()
 	{
-
-		throw new NotImplementedException();
 
 		Image.InitAs(480, 480, BL.Format.BL_FORMAT_PRGB32, out Image? img).Ok();
 

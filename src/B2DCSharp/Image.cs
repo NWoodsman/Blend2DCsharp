@@ -20,7 +20,7 @@ public class Image
 		{
 			ContextImpl ctx1 = new ContextImpl();
 
-			var result = Lib.bl_context_init_as(ref ctx1.selfhandle, ref handle_image_self, 0);
+			var result = Lib.bl_context_init_as(out ctx1.selfhandle, ref handle_image_self, 0);
 
 			// immediately move to begin() call, as that's how it is implemented in C++
 			//result = Lib.bl_context_begin(ref handle_ctx);
@@ -46,7 +46,7 @@ public class Image
 
 		img = default;
 
-		var result = Lib.bl_image_init_as(ref img1.handle_image_self, width, height, format);
+		var result = Lib.bl_image_init_as(out img1.handle_image_self, width, height, format);
 
 
 		if (result is ResultCode.BL_SUCCESS)

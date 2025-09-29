@@ -10,7 +10,7 @@ internal static partial class Lib
 	const string dllPath = @"..\..\..\..\..\..\lib\Blend2D\blend2d.dll";
 
 	[LibraryImport(dllPath, EntryPoint = "bl_image_init_as")]
-	internal static partial ResultCode bl_image_init_as(ref nint handle, int width, int height, Format format);
+	internal static partial ResultCode bl_image_init_as(out nint handle, int width, int height, Format format);
 
 	/*[LibraryImport(dllPath, EntryPoint = "bl_image_create")]
 	internal static partial ResultCode bl_image_create(ref nint handle, int w, int h, Format format);*/
@@ -19,7 +19,7 @@ internal static partial class Lib
 	internal static partial ResultCode bl_image_destroy(nint handle);
 
 	[LibraryImport(dllPath, EntryPoint = "bl_context_init_as")]
-	internal static partial ResultCode bl_context_init_as(ref nint context_handle, ref nint image_handle,nint nullptr);
+	internal static partial ResultCode bl_context_init_as(out nint context_handle, ref nint image_handle,nint nullptr);
 
 	[LibraryImport(dllPath, EntryPoint = "bl_context_begin")]
 	internal static partial ResultCode bl_context_begin(ref nint image_handle);
@@ -31,8 +31,8 @@ internal static partial class Lib
 	internal static partial ResultCode bl_context_fill_geometry(ref nint context_handle, GeometryType type, RoundRect rect);
 
 	[LibraryImport(dllPath, EntryPoint = "bl_gradient_init_as")]
-	internal static partial ResultCode bl_gradient_init_as(ref nint self, GradientType type, LinearGradientValues values, ExtendMode mode, nint stops_handle, nuint n, nint transform_handle);
-
+	internal static partial ResultCode bl_gradient_init_as(out nint self, GradientType type, LinearGradientValues values, ExtendMode mode, nint stops_handle, nuint n, nint transform_handle);
+		
 	[LibraryImport(dllPath, EntryPoint = "bl_gradient_add_stop_rgba32")]
 	internal static partial ResultCode bl_gradient_add_stop_rgba32(ref nint self, double offset, UInt32 argb32);
 

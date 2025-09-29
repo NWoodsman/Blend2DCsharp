@@ -14,16 +14,9 @@ namespace BL.Gradient
 
 		public static ResultCode Init(ref LinearGradientValues values, out LinearGradient gradient)
 		{
-			LinearGradient lg = new();
+			gradient = new();
 
-			gradient = default;
-
-			var result = Lib.bl_gradient_init_as(ref lg.selfhandle, GradientType.BL_GRADIENT_TYPE_LINEAR, values, ExtendMode.BL_EXTEND_MODE_PAD, 0, 0, 0);
-
-			if(result is ResultCode.BL_SUCCESS)
-			{
-				gradient = lg;
-			}
+			var result = Lib.bl_gradient_init_as(out gradient.selfhandle, GradientType.BL_GRADIENT_TYPE_LINEAR, values, ExtendMode.BL_EXTEND_MODE_PAD, 0, 0, 0);
 
 			return result;
 		}
