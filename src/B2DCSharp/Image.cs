@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,15 +9,8 @@ namespace BL;
 
 public class Image
 {
-	nint handle;
+	nint handle_image_self;
 	Context? context;
-
-	public ResultCode Create(int width, int height, Format format)
-	{
-		var result = Lib.bl_image_create(ref handle, width,height, format);
-
-		return result;
-	}
 
 	public ResultCode ContextOpen(out Context? ctx)
 	{
@@ -24,19 +18,21 @@ public class Image
 
 		if (context is null)
 		{
-			nint ctxhandle = default;
+			ContextImpl ctx1 = new ContextImpl();
 
-			//var result = Lib.ContextInit(ref ctxhandle, ref handle);
-			var result = Lib.bl_context_init_as(ref ctxhandle, ref handle, 0);
+			var result = Lib.bl_context_init_as(ref ctx1.selfhandle, ref handle_image_self, 0);
+
+			// immediately move to begin() call, as that's how it is implemented in C++
+			//result = Lib.bl_context_begin(ref handle_ctx);
 
 			if (result is not ResultCode.BL_SUCCESS)
 			{
 				return result;
 			}
 
-			context = new ContextImpl(handle,ctxhandle);
+			context = ctx1;
 
-			ctx = context;
+			ctx = ctx1;
 
 			return result;
 
@@ -44,16 +40,18 @@ public class Image
 		else throw new InvalidOperationException("Context must be closed before a new context can be opened");
 	}
 
-	public static ResultCode Init(out Image? img)
+	public static ResultCode InitAs(int width, int height, Format format, out Image? img)
 	{
-		img = default;
-		nint handle = default;
+		Image img1 = new Image();
 
-		var result = Lib.bl_image_init(ref handle);
+		img = default;
+
+		var result = Lib.bl_image_init_as(ref img1.handle_image_self, width, height, format);
+
 
 		if (result is ResultCode.BL_SUCCESS)
 		{
-			img = new Image() { handle = handle };
+			img = img1;
 			return result;
 		}
 		else
@@ -63,7 +61,7 @@ public class Image
 	}
 	public ResultCode WriteToFile(string path)
 	{
-		return Lib.bl_image_write_to_file(handle, path, 0);
+		return Lib.bl_image_write_to_file(ref handle_image_self, path, 0);
 	}
 
 	private Image()

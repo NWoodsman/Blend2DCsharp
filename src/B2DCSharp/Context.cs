@@ -25,7 +25,7 @@ internal class ContextImpl : Context
 
 	public override ResultCode Fill(ref RoundRect rect)
 	{
-		return Lib.bl_context_fill_geometry(ref selfhandle, GeometryType.BL_GEOMETRY_TYPE_ROUND_RECT, ref rect);
+		return Lib.bl_context_fill_geometry(ref selfhandle, GeometryType.BL_GEOMETRY_TYPE_ROUND_RECT, rect);
 	}
 	public override ResultCode SetFillStyle(ref LinearGradient gradient)
 	{
@@ -34,13 +34,15 @@ internal class ContextImpl : Context
 	}
 	public override ResultCode End()
 	{
-		return Lib.bl_context_end(selfhandle);
+		return Lib.bl_context_end(ref selfhandle);
 	}
 
-	internal ContextImpl(nint imagehandle, nint selfhandle)
+	internal ContextImpl() { }
+
+	internal ContextImpl(nint self_ctx_handle, nint img_handle)
 	{
-		this.imagehandle = imagehandle;
-		this.selfhandle = selfhandle;
+		this.imagehandle = img_handle;
+		this.selfhandle = self_ctx_handle;
 	}
 }
 
